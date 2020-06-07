@@ -1,3 +1,4 @@
+require './lib/character'
 
 class Message
   attr_reader :message_array, :shift
@@ -13,8 +14,11 @@ class Message
   end
 
   def change_message
+    @message_array.map! do |character|
+      Character.new(character)
+    end
     @message_array.map do |character|
-      find_new_char = move_alphabet(character)
+      find_new_char = move_alphabet(character.id)
       if (@message_array.index(character) + 4) % 4 == 0
         find_new_char.rotate(@shift[:A])[0]
       elsif (@message_array.index(character) + 3) % 4 == 0
