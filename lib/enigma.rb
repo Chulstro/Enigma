@@ -17,16 +17,20 @@ class Enigma
     @offset = format('%04d',finder[-4..-1])
   end
 
-  def encrypt(message, key = rand(10000), date = Time.now)
-    @key = format('%05d', key)
-    @date = date.strftime('%m%d%y')
-
+  def encrypt(message, key = format('%05d', rand(10000)), date = Time.now.strftime('%m%d%y'))
+    accumulator = {}
+    @key = key
+    @date = date
     add_offset
     change = Shift.new(@key, @offset)
     change.make_shift
     @shift = change.shift
+
     @message = Message.new(message, @shift)
-    @message.change_message + " " + @key
+    accumulator[:encryption] = @message.change_message
+    accumulator[:key] = @key
+    accumulator[:date] = @date
+    accumulator
   end
 
 end
