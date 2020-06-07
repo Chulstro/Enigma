@@ -11,6 +11,18 @@ class MessageTest < Minitest::Test
   end
 
   def test_its_initial_values
+    expected = {
+      A: 27,
+      B: 38,
+      C: 41,
+      D: 15
+    }
     assert_equal ["F", "i", "g", "h", "t", " ", "m", "e"], @message.message_array
+    assert_equal expected, @message.shift
+  end
+
+  def test_it_finds_index
+    assert_equal "f", @message.move_alphabet("f")[0]
+    assert_equal "ftuwtk t", @message.change_message
   end
 end
