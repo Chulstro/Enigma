@@ -5,10 +5,11 @@ class EnigmaTest < Minitest::Test
 
   def setup
     @message = Enigma.new
+    @date = Time.new(2020, 06, 06)
   end
 
   def test_it_can_encrypt
-    @message.encrypt("Fight me")
     assert_equal "a", Enigma.characters[0]
+    assert_equal "ftuwtk t 23415", @message.encrypt("Fight me", "23415", @date)
   end
 end
