@@ -20,6 +20,7 @@ class EnigmaTest < Minitest::Test
     }
     assert_equal "a", Enigma.characters[0]
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
+    assert_equal "keder ohulw!", @enigma.encrypt("Hello world!", "02715", "040895")[:encryption]
   end
 
   def test_it_can_decrypt
@@ -30,5 +31,6 @@ class EnigmaTest < Minitest::Test
     }
 
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+    assert_equal "hello world!", @enigma.decrypt("keder ohulw!", "02715", "040895")[:decryption]
   end
 end
