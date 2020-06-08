@@ -32,6 +32,8 @@ class Enigma
   end
 
   def decrypt(message, key, date)
+    @key = key
+    @date = date
     accumulator = {}
     change = Shift.new(key, add_offset(date))
     change.make_shift
