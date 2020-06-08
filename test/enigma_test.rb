@@ -8,6 +8,10 @@ class EnigmaTest < Minitest::Test
     @date = Time.new(2020, 06, 06)
   end
 
+  def test_it_can_make_offset
+    assert_equal "4400", @enigma.add_offset("060620")
+  end
+
   def test_it_can_encrypt
     expected = {
       encryption: "keder ohulw",
@@ -17,4 +21,8 @@ class EnigmaTest < Minitest::Test
     assert_equal "a", Enigma.characters[0]
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
   end
+
+  # def test_it_can_decrypt
+  #   assert_equal "hello world", @enigma.decrypt("keder ohulw", "02715", "040895")
+  # end
 end
