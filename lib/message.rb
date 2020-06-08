@@ -1,7 +1,7 @@
 require './lib/character'
 
 class Message
-  attr_reader :message_array, :shift
+  attr_reader :message_array, :shift, :characters
 
   def initialize(message, shift)
     @characters = ("a".."z").to_a << " "
