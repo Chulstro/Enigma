@@ -1,13 +1,9 @@
 require './lib/enigma'
 
-puts "Insert file for encryption"
-file = gets.chomp
-text = File.open(file, "r")
+text = File.open(ARGV[0], "r")
 message = text.read
 enigma = Enigma.new
-puts "Name a destination for your encryption"
-new_file = gets.chomp
-encryption = File.open(new_file, 'w')
+encryption = File.open(ARGV[1], 'w')
 encryption.write(enigma.encrypt(message)[:encryption])
 
-puts "Created #{new_file} with the key of #{enigma.key} and date of #{enigma.date}"
+puts "Created #{ARGV[1]} with the key of #{enigma.key} and date of #{enigma.date}"

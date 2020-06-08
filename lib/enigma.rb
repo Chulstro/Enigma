@@ -2,6 +2,7 @@ require './lib/shift'
 require './lib/message'
 
 class Enigma
+  attr_reader :key, :date
   @@characters = ("a".."z").to_a << " "
 
   def initialize
@@ -17,6 +18,8 @@ class Enigma
   end
 
   def encrypt(message, key = format('%05d', rand(10000)), date = Time.now.strftime('%m%d%y'))
+    @key = key
+    @date = date
     accumulator = {}
     change = Shift.new(key, add_offset(date))
     change.make_shift
