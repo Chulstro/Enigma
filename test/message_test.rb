@@ -30,6 +30,7 @@ class MessageTest < Minitest::Test
   end
 
   def test_it_can_decrypt
+    assert_equal "h", @message_3.move_alphabet_reverse("h")[0]
     assert_equal "hello world", @message_3.decrypt_message
   end
 end
