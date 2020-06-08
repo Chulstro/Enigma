@@ -18,15 +18,19 @@ class Message
       Character.new(character)
     end
     @message_array.map do |character|
-      find_new_char = move_alphabet(character.id)
-      if (@message_array.index(character) + 4) % 4 == 0
-        find_new_char.rotate(@shift[:A])[0]
-      elsif (@message_array.index(character) + 3) % 4 == 0
-        find_new_char.rotate(@shift[:B])[0]
-      elsif (@message_array.index(character) + 2) % 4 == 0
-        find_new_char.rotate(@shift[:C])[0]
+      if @characters.index(character.id.downcase) == nil
+        character.id
       else
-        find_new_char.rotate(@shift[:D])[0]
+        find_new_char = move_alphabet(character.id)
+        if (@message_array.index(character) + 4) % 4 == 0
+          find_new_char.rotate(@shift[:A])[0]
+        elsif (@message_array.index(character) + 3) % 4 == 0
+          find_new_char.rotate(@shift[:B])[0]
+        elsif (@message_array.index(character) + 2) % 4 == 0
+          find_new_char.rotate(@shift[:C])[0]
+        else
+          find_new_char.rotate(@shift[:D])[0]
+        end
       end
     end.join
   end
