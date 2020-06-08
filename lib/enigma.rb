@@ -22,13 +22,21 @@ class Enigma
     change.make_shift
 
     message = Message.new(message, change.shift)
-    accumulator[:encryption] = message.change_message
+    accumulator[:encryption] = message.encrypt_message
     accumulator[:key] = key
     accumulator[:date] = date
     accumulator
   end
 
-  # def decrypt(message, key, date)
-  # end
+  def decrypt(message, key, date)
+    accumulator = {}
+    change = Shift.new(key, add_offset(date))
+    message = Message.new(message, change.shift)
+
+    accumulator[:decryption] = message.decrypt_message
+    accumulator[:key] = key
+    accumulator[:date] = date
+    accumulator
+  end
 
 end

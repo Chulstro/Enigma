@@ -13,7 +13,12 @@ class Message
     @characters.rotate(@characters.index(character.downcase))
   end
 
-  def change_message
+  def move_alphabet_reverse(character)
+    rev_characters = @characters.reverse
+    rev_characters.rotate(rev_characters.index(character.downcase))
+  end
+
+  def encrypt_message
     @message_array.map! do |character|
       Character.new(character)
     end
@@ -35,4 +40,25 @@ class Message
     end.join
   end
 
+  def decrypt_message
+    @message_array.map! do |character|
+      Character.new(character)
+    end
+    @message_array.map do |character|
+      if @characters.index(character.id.downcase) == nil
+        character.id
+      else
+        find_new_char = move_alphabet_reverse(character.id)
+        if (@message_array.index(character) + 4) % 4 == 0
+          find_new_char.rotate(@shift[:A])[0]
+        elsif (@message_array.index(character) + 3) % 4 == 0
+          find_new_char.rotate(@shift[:B])[0]
+        elsif (@message_array.index(character) + 2) % 4 == 0
+          find_new_char.rotate(@shift[:C])[0]
+        else
+          find_new_char.rotate(@shift[:D])[0]
+        end
+      end
+    end.join
+  end
 end
