@@ -2,7 +2,7 @@ require './lib/shift'
 require './lib/message'
 
 class Enigma
-  attr_reader :offset, :key, :date, :shift
+  attr_reader :key, :date
   @@characters = ("a".."z").to_a << " "
 
   def initialize
@@ -12,24 +12,36 @@ class Enigma
     @@characters
   end
 
-  def add_offset
-    finder = (@date.to_i ** 2).to_s
-    @offset = format('%04d',finder[-4..-1])
+  def add_offset(date)
+    finder = (date.to_i ** 2).to_s
+    offset = format('%04d',finder[-4..-1])
   end
 
   def encrypt(message, key = format('%05d', rand(10000)), date = Time.now.strftime('%m%d%y'))
-    accumulator = {}
     @key = key
     @date = date
-    add_offset
-    change = Shift.new(@key, @offset)
+    accumulator = {}
+    change = Shift.new(key, add_offset(date))
     change.make_shift
-    @shift = change.shift
 
-    @message = Message.new(message, @shift)
-    accumulator[:encryption] = @message.change_message
-    accumulator[:key] = @key
-    accumulator[:date] = @date
+    message = Message.new(message, change.shift)
+    accumulator[:encryption] = message.encrypt_message
+    accumulator[:key] = key
+    accumulator[:date] = date
+    accumulator
+  end
+
+  def decrypt(message, key, date)
+    @key = key
+    @date = date
+    accumulator = {}
+    change = Shift.new(key, add_offset(date))
+    change.make_shift
+    message = Message.new(message, change.shift)
+
+    accumulator[:decryption] = message.decrypt_message
+    accumulator[:key] = key
+    accumulator[:date] = date
     accumulator
   end
 
