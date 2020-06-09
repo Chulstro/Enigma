@@ -31,7 +31,7 @@ class Enigma
     accumulator
   end
 
-  def decrypt(message, key, date)
+  def decrypt(message, key, date = Time.now.strftime('%m%d%y'))
     @key = key
     @date = date
     accumulator = {}
